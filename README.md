@@ -1,2 +1,2 @@
-# crypto-gram-guru
-CryptoGramGuru web page
+# crypto-graph-guru
+CryptoGraphGuru web page
