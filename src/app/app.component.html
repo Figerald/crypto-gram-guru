@@ -1,0 +1,120 @@
+<div class="header">
+  <img src="../assets/Yellow_brand_background.png" alt="Crypto Graph Guru header image">
+</div>
+<div class="main">
+  <div class="main-content">
+    <div class="main-content_img">
+      <img src="../assets/icon_1.png" alt="Proprietary blockchain research">
+    </div>
+    <h4>Proprietary blockchain research</h4>
+  </div>
+  <div class="main-content">
+    <div class="main-content_img">
+      <img src="../assets/icon_2.png" class="wider-image" alt="Optimal long-term blockchain portfolios">
+    </div>
+    <h4>Optimal long-term blockchain portfolios</h4>
+  </div>
+  <div class="main-content">
+    <div class="main-content_img">
+      <img src="../assets/icon_3.png" alt="Critical review of existing projects">
+    </div>
+    <h4>Critical review of existing projects</h4>
+  </div>
+  <div class="main-content">
+    <div class="main-content_img">
+      <img src="../assets/icon_4.png" alt="Potential upcoming projects">
+    </div>
+    <h4>Potential upcoming projects</h4>
+  </div>
+</div>
+<div class="subscribe">
+  <h1>SUBSCRIBE</h1>
+  <div class="subscribe-container">
+    <div class="subscribe-container-block">
+      <h4>1. Pick periodicity</h4>
+      <div class="bm-1 justify-start">
+        <input type="radio" name="periodicity" id="annual" value="annual" [(ngModel)]="periodicity" checked>
+        <label for="annual" class="subscribe-container-block_label">Annual 1.2 BNB</label>
+      </div>
+      <div class="justify-start">
+        <input type="radio" name="periodicity" id="quarter" value="quarter" [(ngModel)]="periodicity">
+        <label for="quarter" class="subscribe-container-block_label">Quarterly 0.4 BNB</label>
+      </div>
+      <div *ngIf="periodError">
+        <p class="periodicity-error">Please select periodicity!</p>
+      </div>
+    </div>
+    <div class="subscribe-container-block">
+      <h4>2. Provide details {{ shortAccount }}</h4>
+      <div>
+        <form [formGroup]="subscriptionForm">
+          <input type="text"
+                 name="email"
+                 id="email"
+                 placeholder="Your email"
+                 class="subscribe-container-block_input"
+                 [class.subscribe-container-invalid]="errorObj.isError"
+                 formControlName="email">
+        </form>
+        <div class="invalid-message" *ngIf="errorObj.isError">
+          <p>{{ errorObj.errorMessage }}</p>
+        </div>
+      </div>
+      <div class="subscribe-container-block_metamask">
+        <button type="button" class="subscribe-container-block_button" (click)="connectToMetamask()" *ngIf="!shortAccount; else connected">
+          <img src="../assets/metamask.svg" alt="MetaMask"> Connect MetaMask
+        </button>
+        <ng-template #connected>
+          <button type="button" class="subscribe-container-block_button">
+            {{ shortAccount }}
+          </button>
+        </ng-template>
+        <div *ngIf="!isMetamaskConnected">
+          <p class="periodicity-error">Please connect to MetaMask!</p>
+        </div>
+      </div>
+    </div>
+    <div class="subscribe-container-block">
+      <h4>3. Confirm selection</h4>
+      <div class="subscribe-container-block_confirm">
+        <button type="button" class="subscribe-container-block_button bm-1" (click)="checkForSubscription()">Check for subscription</button>
+        <button type="button" class="subscribe-container-block_button" (click)="confirmSubscription()">Confirm</button>
+      </div>
+    </div>
+  </div>
+  <div class="subscribe-details" *ngIf="isSubscribeDetails">
+    <p *ngIf="subscriberDetails && subscriberDetails.Coupon; else noSubscription">Email status: {{ subscriberDetails.Coupon }}, purchased {{ subscriberDetails.Date }}.</p>
+    <ng-template #noSubscription>
+      <p>Email status: You don't have a subscription!</p>
+    </ng-template>
+  </div>
+  <div class="subscribe-notice">
+    <p>You'll be informed by email about successful subscription. All sales are non-refundable!</p>
+  </div>
+</div>
+<div class="contact">
+  <h1>CONTACT US</h1>
+  <div class="contact-form">
+    <form [formGroup]="contactForm">
+      <div class="contact-form_user-data">
+        <input type="text" name="name" id="name" formControlName="name" class="contact-input" placeholder="Your name">
+        <input type="email" name="email" id="email" formControlName="email" class="contact-input" placeholder="Your email">
+      </div>
+      <div class="contact-form_text">
+        <textarea rows="8" cols="70" formControlName="text" class="contact-input" placeholder="Your message"></textarea>
+      </div>
+    </form>
+    <button type="button" class="contact-form_button" (click)="sendMessage()">Send message</button>
+  </div>
+</div>
+<div class="footer-notice">
+  <p>Notice, we are not interested in collaborations/partnerships or promotional deals. We will not promote your project, 
+    nor review it. We are not looking for new team member or exposure to new markets. We do not run a telegram/discord 
+  channel or twitter and will not contact you with solicitation offers.</p>
+</div>
+<div class="loading" *ngIf="loading">
+  <ng-lottie width="300px" height="300px" [options]="options"></ng-lottie>
+</div>
+<div class="notification notification-{{notificationObj.type}}" [@slide-in]="notificationAnimationStatus">
+  <p>{{ notificationObj.text }}</p>
+</div>
